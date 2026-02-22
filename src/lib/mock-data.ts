@@ -139,7 +139,10 @@ export const MOCK_PATRON = {
     title: "Prof.",
     role: "Grand Patron (COESA)",
     designation: "Director, Distance Learning, ABU Zaria",
+    specialization: "Distributed Systems & Networking",
+    courses_taught: ["COEN 502", "COEN 504"],
     photo_url: "/images/lecturers/Profmb1.jpeg",
+    order_index: 0,
 };
 
 export const MOCK_HOD = {
@@ -148,10 +151,13 @@ export const MOCK_HOD = {
     title: "Dr.",
     role: "Head of Department",
     designation: "Computer Engineering, ABU Zaria",
+    specialization: "Digital Signal Processing",
+    courses_taught: ["COEN 501", "COEN 401"],
     photo_url: "/images/lecturers/hod.jpg",
+    order_index: 0,
 };
 
-export const MOCK_STAFF_GRID: Lecturer[] = [
+export const MOCK_LECTURERS: Lecturer[] = [
     {
         id: "l1",
         full_name: "Engr. Yusuf Ibrahim",
@@ -159,7 +165,8 @@ export const MOCK_STAFF_GRID: Lecturer[] = [
         photo_url: "/images/lecturers/lec1.jpg",
         email: "yibrahim@abu.edu.ng",
         office: "Room 302",
-        courses_taught: ["CPE 201", "CPE 301"],
+        specialization: "Software Engineering",
+        courses_taught: ["COEN 201", "COEN 301"],
         order_index: 1
     },
     {
@@ -169,7 +176,8 @@ export const MOCK_STAFF_GRID: Lecturer[] = [
         photo_url: "/images/lecturers/lec2.jpg",
         email: "smabdullahi@abu.edu.ng",
         office: "Room 105",
-        courses_taught: ["CPE 301", "CPE 501"],
+        specialization: "Computer Architecture",
+        courses_taught: ["COEN 301", "COEN 501"],
         order_index: 2
     },
     {
@@ -179,7 +187,8 @@ export const MOCK_STAFF_GRID: Lecturer[] = [
         photo_url: "/images/lecturers/lec3.jpg",
         email: "fbumar@abu.edu.ng",
         office: "Room 108",
-        courses_taught: ["CPE 401", "CPE 501"],
+        specialization: "Artificial Intelligence",
+        courses_taught: ["COEN 401", "COEN 501"],
         order_index: 3
     },
     {
@@ -189,8 +198,56 @@ export const MOCK_STAFF_GRID: Lecturer[] = [
         photo_url: "/images/lecturers/lec4.jpg",
         email: "madamu@abu.edu.ng",
         office: "Room 110",
-        courses_taught: ["Level Coordination"],
+        specialization: "Embedded Systems & Control",
+        courses_taught: ["COEN 331", "COEN 337", "COEN 335"],
         order_index: 4
+    },
+];
+
+export const MOCK_STAFF_GRID_HOD: Lecturer[] = [
+    {
+        id: "l5",
+        full_name: "Dr. Aminu Bello",
+        title: "Dr.",
+        photo_url: "/images/lecturers/lec1.jpg",
+        email: "abello@abu.edu.ng",
+        office: "Room 301",
+        specialization: "Microprocessors",
+        courses_taught: ["COEN 401", "COEN 407"],
+        order_index: 5
+    },
+    {
+        id: "l6",
+        full_name: "Engr. Bashir Suleiman",
+        title: "Engr.",
+        photo_url: "/images/lecturers/lec2.jpg",
+        email: "bsuleiman@abu.edu.ng",
+        office: "Room 205",
+        specialization: "Control Engineering",
+        courses_taught: ["COEN 331", "COEN 431"],
+        order_index: 6
+    },
+    {
+        id: "l7",
+        full_name: "Dr. Hauwa Garba",
+        title: "Dr.",
+        photo_url: "/images/lecturers/lec3.jpg",
+        email: "hgarba@abu.edu.ng",
+        office: "Room 112",
+        specialization: "Computer Networks",
+        courses_taught: ["COEN 337", "COEN 537"],
+        order_index: 7
+    },
+    {
+        id: "l8",
+        full_name: "Prof. Zainab Aliyu",
+        title: "Prof.",
+        photo_url: "/images/lecturers/lec4.jpg",
+        email: "zaliyu@abu.edu.ng",
+        office: "Room 103",
+        specialization: "Information Security",
+        courses_taught: ["COEN 535", "COEN 538"],
+        order_index: 8
     },
 ];
 
@@ -246,13 +303,36 @@ export const MOCK_GALLERY: GalleryImage[] = [
 export const MOCK_PROGRAMS: Program[] = [
     {
         id: "p1", title: "Python Bootcamp 2026", subtitle: "From Zero to Python Hero",
-        description: "A comprehensive 6-week bootcamp covering Python fundamentals, data structures, web development with Django, and an introduction to machine learning.",
+        description: "A comprehensive 6-week bootcamp covering Python fundamentals, data structures, and web development.",
         start_date: "2026-03-01", end_date: "2026-04-12", duration_label: "6 Weeks",
         venue: "CompEng Computer Lab", mode: "Physical",
-        enrollment_fee: { internal: 3000, external: 4000 },
+        enrollment_fee: { internal: 3000, external: 5000 },
         payment_details: { account: "1234567890", name: "COESA ABU Zaria", bank: "GTBank" },
-        contact_phone: ["+234 800 000 0001", "+234 800 000 0002"],
+        contact_phone: ["+234 800 000 0001"],
         slots_limited: true, is_active: true, created_at: "2026-02-01T00:00:00Z",
+        cover_image_url: "/images/programs/1 image.png"
+    },
+    {
+        id: "p2", title: "IoT & Embedded Systems", subtitle: "Building the Future",
+        description: "Learn to design and build internet-connected devices using Arduino, Raspberry Pi, and ESP32.",
+        start_date: "2026-05-15", end_date: "2026-06-30", duration_label: "8 Weeks",
+        venue: "Hardware Lab", mode: "Hybrid",
+        enrollment_fee: { internal: 5000, external: 8000 },
+        payment_details: { account: "1234567890", name: "COESA ABU Zaria", bank: "GTBank" },
+        contact_phone: ["+234 800 000 0002"],
+        slots_limited: true, is_active: true, created_at: "2026-02-05T00:00:00Z",
+        cover_image_url: "/images/programs/1 image.png"
+    },
+    {
+        id: "p3", title: "AI & Machine Learning", subtitle: "Intelligence Reimagined",
+        description: "An intensive dive into neural networks, computer vision, and NLP using PyTorch and TensorFlow.",
+        start_date: "2026-08-10", end_date: "2026-09-20", duration_label: "6 Weeks",
+        venue: "Main Auditorium", mode: "Online",
+        enrollment_fee: { internal: 4000, external: 7000 },
+        payment_details: { account: "1234567890", name: "COESA ABU Zaria", bank: "GTBank" },
+        contact_phone: ["+234 800 000 0003"],
+        slots_limited: true, is_active: true, created_at: "2026-02-10T00:00:00Z",
+        cover_image_url: "/images/programs/1 image.png"
     },
 ];
 

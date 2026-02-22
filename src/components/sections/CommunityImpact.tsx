@@ -4,7 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { MOCK_COMMUNITY_IMPACT } from "@/lib/mock-data";
-import { MapPin, Calendar } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function CommunityImpact() {
@@ -45,7 +45,7 @@ export function CommunityImpact() {
                                 {/* Image Container */}
                                 <div className="relative aspect-[16/9] overflow-hidden rounded-2xl bg-coesa-midnight border border-white/5 mb-4 shadow-xl">
                                     <Image
-                                        src={item.image_url}
+                                        src={item.image_url || "/images/lecturers/hod.jpg"}
                                         alt={item.title}
                                         fill
                                         className="object-cover transition-transform duration-700 group-hover:scale-110"

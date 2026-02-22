@@ -4,8 +4,8 @@ import { AboutSection } from "@/components/sections/AboutSection";
 import { ExecutivesPreview } from "@/components/sections/ExecutivesPreview";
 import { CommunityImpact } from "@/components/sections/CommunityImpact";
 import { StaffPreview } from "@/components/sections/StaffPreview";
-import { NewsPreview } from "@/components/sections/NewsPreview";
-import { ProgramBanner } from "@/components/sections/ProgramBanner";
+import { NewsMagazine } from "@/components/sections/NewsMagazine";
+import { ProgramShowcase } from "@/components/sections/ProgramShowcase";
 
 export default function HomePage() {
   return (
@@ -16,8 +16,8 @@ export default function HomePage() {
       <ExecutivesPreview />
       <CommunityImpact />
       <StaffPreview />
-      <NewsPreview />
-      <ProgramBanner />
+      <NewsMagazine />
+      <ProgramShowcase />
     </>
   );
 }

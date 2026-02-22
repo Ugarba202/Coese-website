@@ -7,12 +7,17 @@ import type { Member } from "@/types";
 
 interface MemberCardProps {
     member: Member;
+    featured?: boolean;
     className?: string;
 }
 
-export function MemberCard({ member, className }: MemberCardProps) {
+export function MemberCard({ member, featured, className }: MemberCardProps) {
     return (
-        <div className={cn("group flex flex-col bg-[#0D1525] rounded-2xl overflow-hidden border border-white/5 shadow-2xl transition-all duration-300 hover:border-coesa-electric/40 hover:shadow-coesa-electric/10", className)}>
+        <div className={cn(
+            "group flex flex-col bg-[#0D1525] rounded-2xl overflow-hidden border border-white/5 shadow-2xl transition-all duration-300 hover:border-coesa-electric/40 hover:shadow-coesa-electric/10",
+            featured && "border-coesa-electric/30 ring-1 ring-coesa-electric/20",
+            className
+        )}>
             {/* Image Container */}
             <div className="relative aspect-[4/5] overflow-hidden bg-coesa-navy">
                 {/* Branding accent glow on hover */}

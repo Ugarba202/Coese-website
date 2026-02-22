@@ -3,12 +3,12 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { MOCK_PATRON, MOCK_HOD, MOCK_STAFF_GRID } from "@/lib/mock-data";
-import { Mail, Briefcase } from "lucide-react";
+import { MOCK_PATRON, MOCK_HOD, MOCK_LECTURERS, MOCK_STAFF_GRID_HOD } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
+import type { Lecturer } from "@/types";
 
 interface StaffCardProps {
-    member: any;
+    member: Lecturer;
     isLarge?: boolean;
 }
 
@@ -19,33 +19,59 @@ function StaffCard({ member, isLarge = false }: StaffCardProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className={cn(
-                "group relative overflow-hidden rounded-3xl bg-coesa-midnight border border-white/5",
-                isLarge ? "aspect-[4/5] md:aspect-auto h-full" : "aspect-square"
+                "group flex flex-col",
+                isLarge ? "h-full" : ""
             )}
         >
-            <Image
-                src={member.photo_url}
-                alt={member.full_name}
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-110"
-                sizes={isLarge ? "50vw" : "25vw"}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-coesa-midnight via-coesa-midnight/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
+            {/* Image Container */}
+            <div className={cn(
+                "relative overflow-hidden rounded-3xl bg-coesa-midnight border border-white/5 mb-6",
+                isLarge ? "aspect-[4/5]" : "aspect-square"
+            )}>
+                <Image
+                    src={member.photo_url || "/images/lecturers/hod.jpg"}
+                    alt={member.full_name}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                />
+            </div>
 
-            <div className="absolute inset-x-0 bottom-0 p-6">
-                <p className="text-[10px] font-bold text-coesa-electric uppercase tracking-widest mb-1">
-                    {member.role}
-                </p>
+            {/* Content Below Image */}
+            <div className="px-2">
+                <div className="flex flex-col gap-1.5 mb-3">
+                    <p className="text-[10px] font-bold text-coesa-electric uppercase tracking-widest">
+                        {member.role || "Lecturer"}
+                    </p>
+                    {member.specialization && (
+                        <p className="text-[11px] font-medium text-coesa-sky uppercase tracking-wider">
+                            {member.specialization}
+                        </p>
+                    )}
+                </div>
+
                 <h3 className={cn(
                     "font-display font-bold text-white group-hover:text-coesa-electric transition-colors",
                     isLarge ? "text-2xl lg:text-3xl" : "text-lg"
                 )}>
                     {member.full_name}
                 </h3>
+
                 {isLarge && member.designation && (
                     <p className="text-sm text-coesa-muted mt-2 max-w-[280px]">
                         {member.designation}
                     </p>
+                )}
+
+                {/* Course Tags - Always Visible */}
+                {member.courses_taught && member.courses_taught.length > 0 && (
+                    <div className="mt-4 flex flex-wrap gap-2">
+                        {member.courses_taught.map((course: string) => (
+                            <span key={course} className="text-[9px] font-bold text-white/50 bg-white/5 border border-white/10 px-2.5 py-1 rounded-lg">
+                                {course}
+                            </span>
+                        ))}
+                    </div>
                 )}
             </div>
         </motion.div>
@@ -74,8 +100,8 @@ export function StaffPreview() {
                             <StaffCard member={MOCK_PATRON} isLarge />
                         </div>
                         <div className="lg:col-span-7">
-                            <div className="grid grid-cols-2 gap-4 h-full">
-                                {MOCK_STAFF_GRID.map((staff) => (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                {MOCK_LECTURERS.slice(0, 4).map((staff) => (
                                     <StaffCard key={staff.id} member={staff} />
                                 ))}
                             </div>
@@ -86,8 +112,8 @@ export function StaffPreview() {
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
                         <div className="lg:col-span-7 order-2 lg:order-1">
                             <div className="grid grid-cols-2 gap-4 h-full">
-                                {MOCK_STAFF_GRID.map((staff, i) => (
-                                    <StaffCard key={`hod-staff-${staff.id}`} member={{ ...staff, id: `hod-staff-${staff.id}` }} />
+                                {MOCK_STAFF_GRID_HOD.map((staff) => (
+                                    <StaffCard key={`hod-staff-${staff.id}`} member={staff} />
                                 ))}
                             </div>
                         </div>

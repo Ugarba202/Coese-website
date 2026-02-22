@@ -43,6 +43,8 @@ export interface Lecturer {
     full_name: string;
     title: string;
     photo_url?: string;
+    role?: string;
+    designation?: string;
     email?: string;
     office?: string;
     courses_taught: string[];

@@ -6,55 +6,55 @@
 
 :root {
   /* PRIMARY PALETTE */
-  --coesa-royal:       #0A5FA8;
-  --coesa-sky:         #1A8FE3;
-  --coesa-electric:    #00B4FF;
-  --coesa-navy:        #061B38;
-  --coesa-midnight:    #030D1F;
+  --coesa-royal: #0A5FA8;
+  --coesa-sky: #1A8FE3;
+  --coesa-electric: #00B4FF;
+  --coesa-navy: #061B38;
+  --coesa-midnight: #030D1F;
 
   /* NEUTRAL PALETTE */
-  --coesa-white:       #FFFFFF;
-  --coesa-off-white:   #F0F6FF;
-  --coesa-muted:       #8BA5C4;
-  --coesa-divider:     #1A3558;
+  --coesa-white: #FFFFFF;
+  --coesa-off-white: #F0F6FF;
+  --coesa-muted: #8BA5C4;
+  --coesa-divider: #1A3558;
 
   /* SEMANTIC */
-  --coesa-success:     #00D084;
-  --coesa-warning:     #FFAA00;
-  --coesa-error:       #FF4757;
+  --coesa-success: #00D084;
+  --coesa-warning: #FFAA00;
+  --coesa-error: #FF4757;
 
   /* GRADIENTS */
-  --grad-hero:   linear-gradient(135deg, #030D1F 0%, #061B38 50%, #0A5FA8 100%);
-  --grad-card:   linear-gradient(145deg, #0D2547 0%, #061B38 100%);
+  --grad-hero: linear-gradient(135deg, #030D1F 0%, #061B38 50%, #0A5FA8 100%);
+  --grad-card: linear-gradient(145deg, #0D2547 0%, #061B38 100%);
   --grad-accent: linear-gradient(90deg, #1A8FE3 0%, #00B4FF 100%);
-  --grad-glow:   radial-gradient(ellipse at center, rgba(0,180,255,0.15) 0%, transparent 70%);
+  --grad-glow: radial-gradient(ellipse at center, rgba(0, 180, 255, 0.15) 0%, transparent 70%);
 
   /* TYPOGRAPHY SCALE */
-  --text-xs:    0.75rem;
-  --text-sm:    0.875rem;
-  --text-base:  1rem;
-  --text-lg:    1.125rem;
-  --text-xl:    1.25rem;
-  --text-2xl:   1.5rem;
-  --text-3xl:   1.875rem;
-  --text-4xl:   2.25rem;
-  --text-5xl:   3rem;
-  --text-hero:  clamp(3rem, 8vw, 6rem);
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  --text-hero: clamp(3rem, 8vw, 6rem);
 
   /* SPACING / RADIUS */
-  --radius-sm:   4px;
-  --radius-md:   10px;
-  --radius-lg:   18px;
-  --radius-xl:   28px;
+  --radius-sm: 4px;
+  --radius-md: 10px;
+  --radius-lg: 18px;
+  --radius-xl: 28px;
   --radius-pill: 9999px;
 
   /* SHADOWS */
   --shadow-card: 0 4px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(26, 143, 227, 0.1);
   --shadow-glow: 0 0 40px rgba(0, 180, 255, 0.25);
-  --shadow-btn:  0 4px 20px rgba(0, 180, 255, 0.35);
+  --shadow-btn: 0 4px 20px rgba(0, 180, 255, 0.35);
 
   /* GLASS */
-  --blur-glass:  blur(16px);
+  --blur-glass: blur(16px);
   --border-glass: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -138,6 +138,19 @@
 
 /* ── UTILITY CLASSES ───────────────────────── */
 @layer utilities {
+  .max-w-container {
+    max-width: 1400px;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
   .text-gradient {
     background: var(--grad-accent);
     -webkit-background-clip: text;
@@ -190,6 +203,7 @@
 
 /* ── REDUCED MOTION ────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {

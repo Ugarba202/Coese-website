@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Exo_2, JetBrains_Mono, Nunito } from "next/font/google";
 import "@/styles/globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { SITE_CONFIG } from "@/lib/constants";
 
 const exo2 = Exo_2({
   subsets: ["latin"],
@@ -26,6 +27,7 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_CONFIG.url),
   title: {
     default: "COESA — ABU Zaria",
     template: "%s | COESA ABU Zaria",
@@ -39,8 +41,11 @@ export const metadata: Metadata = {
     description:
       "Computer Engineering Student Association, ABU Zaria. Engineering the Future, One Line at a Time.",
   },
-  themeColor: "#0A5FA8",
   icons: { icon: "/favicon.ico" },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0A5FA8",
 };
 
 export default function RootLayout({

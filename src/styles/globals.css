@@ -1,0 +1,259 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Nunito:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* PRIMARY PALETTE */
+  --coesa-royal:       #0A5FA8;
+  --coesa-sky:         #1A8FE3;
+  --coesa-electric:    #00B4FF;
+  --coesa-navy:        #061B38;
+  --coesa-midnight:    #030D1F;
+
+  /* NEUTRAL PALETTE */
+  --coesa-white:       #FFFFFF;
+  --coesa-off-white:   #F0F6FF;
+  --coesa-muted:       #8BA5C4;
+  --coesa-divider:     #1A3558;
+
+  /* SEMANTIC */
+  --coesa-success:     #00D084;
+  --coesa-warning:     #FFAA00;
+  --coesa-error:       #FF4757;
+
+  /* GRADIENTS */
+  --grad-hero:   linear-gradient(135deg, #030D1F 0%, #061B38 50%, #0A5FA8 100%);
+  --grad-card:   linear-gradient(145deg, #0D2547 0%, #061B38 100%);
+  --grad-accent: linear-gradient(90deg, #1A8FE3 0%, #00B4FF 100%);
+  --grad-glow:   radial-gradient(ellipse at center, rgba(0,180,255,0.15) 0%, transparent 70%);
+
+  /* TYPOGRAPHY SCALE */
+  --text-xs:    0.75rem;
+  --text-sm:    0.875rem;
+  --text-base:  1rem;
+  --text-lg:    1.125rem;
+  --text-xl:    1.25rem;
+  --text-2xl:   1.5rem;
+  --text-3xl:   1.875rem;
+  --text-4xl:   2.25rem;
+  --text-5xl:   3rem;
+  --text-hero:  clamp(3rem, 8vw, 6rem);
+
+  /* SPACING / RADIUS */
+  --radius-sm:   4px;
+  --radius-md:   10px;
+  --radius-lg:   18px;
+  --radius-xl:   28px;
+  --radius-pill: 9999px;
+
+  /* SHADOWS */
+  --shadow-card: 0 4px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(26, 143, 227, 0.1);
+  --shadow-glow: 0 0 40px rgba(0, 180, 255, 0.25);
+  --shadow-btn:  0 4px 20px rgba(0, 180, 255, 0.35);
+
+  /* GLASS */
+  --blur-glass:  blur(16px);
+  --border-glass: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ── BASE RESET ────────────────────────────── */
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background-color: var(--coesa-midnight);
+    color: var(--coesa-white);
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* Skip to content link */
+  .skip-to-content {
+    position: absolute;
+    top: -100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--coesa-electric);
+    color: var(--coesa-midnight);
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+    z-index: 9999;
+    transition: top 0.2s ease;
+  }
+
+  .skip-to-content:focus {
+    top: 1rem;
+  }
+
+  /* Focus visible rings */
+  :focus-visible {
+    outline: 2px solid var(--coesa-electric);
+    outline-offset: 2px;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--coesa-midnight);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--coesa-royal);
+    border-radius: var(--radius-pill);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--coesa-sky);
+  }
+
+  /* Firefox scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--coesa-royal) var(--coesa-midnight);
+  }
+
+  /* Selection */
+  ::selection {
+    background: rgba(0, 180, 255, 0.3);
+    color: var(--coesa-white);
+  }
+}
+
+/* ── UTILITY CLASSES ───────────────────────── */
+@layer utilities {
+  .text-gradient {
+    background: var(--grad-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glass {
+    background: rgba(6, 27, 56, 0.6);
+    backdrop-filter: var(--blur-glass);
+    -webkit-backdrop-filter: var(--blur-glass);
+    border: var(--border-glass);
+  }
+
+  .glass-strong {
+    background: rgba(6, 27, 56, 0.85);
+    backdrop-filter: var(--blur-glass);
+    -webkit-backdrop-filter: var(--blur-glass);
+    border: var(--border-glass);
+  }
+
+  .glow-border {
+    position: relative;
+  }
+
+  .glow-border::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: var(--grad-accent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+    filter: blur(8px);
+  }
+
+  .glow-border:hover::after {
+    opacity: 0.5;
+  }
+
+  .section-dark {
+    background: var(--coesa-midnight);
+  }
+
+  .section-navy {
+    background: var(--coesa-navy);
+  }
+}
+
+/* ── REDUCED MOTION ────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── RICH TEXT CONTENT ─────────────────────── */
+.prose-coesa {
+  max-width: 760px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+
+.prose-coesa h2 {
+  font-family: 'Exo 2', sans-serif;
+  font-size: var(--text-3xl);
+  font-weight: 800;
+  color: var(--coesa-white);
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.prose-coesa h3 {
+  font-family: 'Exo 2', sans-serif;
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--coesa-white);
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose-coesa p {
+  color: var(--coesa-muted);
+  margin-bottom: 1.25rem;
+  font-size: var(--text-lg);
+}
+
+.prose-coesa ul,
+.prose-coesa ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+  color: var(--coesa-muted);
+}
+
+.prose-coesa li {
+  margin-bottom: 0.5rem;
+}
+
+.prose-coesa a {
+  color: var(--coesa-electric);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose-coesa a:hover {
+  color: var(--coesa-sky);
+}
+
+.prose-coesa img {
+  border-radius: var(--radius-lg);
+  margin: 2rem 0;
+  width: 100%;
+}

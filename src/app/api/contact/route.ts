@@ -2,8 +2,7 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import * as z from "zod";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-const supportEmail = process.env.SUPPORT_EMAIL || "[EMAIL_ADDRESS";
+const supportEmail = process.env.SUPPORT_EMAIL || "coesa@abu.edu.ng";
 
 const contactSchema = z.object({
     name: z.string().min(2),
@@ -31,6 +30,7 @@ export async function POST(req: Request) {
         }
 
         // Send email via Resend
+        const resend = new Resend(process.env.RESEND_API_KEY);
         const { data, error } = await resend.emails.send({
             from: "COESA Website <onboarding@resend.dev>", // Needs verified domain in production
             to: supportEmail,

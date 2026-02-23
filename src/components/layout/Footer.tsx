@@ -121,20 +121,7 @@ export function Footer() {
                             ))}
                         </div>
 
-                        {/* Google Map */}
-                        <div className="rounded-2xl overflow-hidden border border-white/10 h-[150px] relative group">
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15655.84594689874!2d7.633510!3d11.153960!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x11b0284e3e3b3b3b%3A0x1b0b0b0b0b0b0b0b!2sDepartment%20of%20Computer%20Engineering%2C%20Ahmadu%20Bello%20University%2C%20Zaria!5e0!3m2!1sen!2sng!4v1700000000000!5m2!1sen!2sng"
-                                width="100%"
-                                height="100%"
-                                style={{ border: 0, filter: 'grayscale(1) invert(0.9) contrast(1.2)' }}
-                                allowFullScreen={false}
-                                loading="lazy"
-                                referrerPolicy="no-referrer-when-downgrade"
-                                className="transition-all duration-700 group-hover:grayscale-0 group-hover:invert-0"
-                            ></iframe>
-                            <div className="absolute inset-0 pointer-events-none border-[6px] border-coesa-navy rounded-2xl" />
-                        </div>
+
                     </div>
                 </div>
 

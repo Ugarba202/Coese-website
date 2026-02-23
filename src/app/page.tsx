@@ -5,7 +5,7 @@ import { ExecutivesPreview } from "@/components/sections/ExecutivesPreview";
 import { CommunityImpact } from "@/components/sections/CommunityImpact";
 import { StaffPreview } from "@/components/sections/StaffPreview";
 import { NewsMagazine } from "@/components/sections/NewsMagazine";
-import { ProgramShowcase } from "@/components/sections/ProgramShowcase";
+import { ContactSection } from "@/components/sections/ContactSection";
 
 export default function HomePage() {
   return (
@@ -17,7 +17,7 @@ export default function HomePage() {
       <CommunityImpact />
       <StaffPreview />
       <NewsMagazine />
-      <ProgramShowcase />
+      <ContactSection />
     </>
   );
 }

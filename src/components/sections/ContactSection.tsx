@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { Send } from "lucide-react";
-import { SITE_CONFIG } from "@/lib/constants";
 import { useState } from "react";
 
 export function ContactSection() {

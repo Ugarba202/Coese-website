@@ -21,23 +21,20 @@ export function ContactSection() {
     };
 
     return (
-        <section className="py-24 bg-blue-50/50 relative overflow-hidden" id="contact">
-            {/* Background pattern */}
-            <div className="absolute inset-0 opacity-[0.02]"
-                style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%2300B4FF' stroke-width='0.5'%3E%3Cpath d='M30 0v60M0 30h60M15 15l30 30M45 15L15 45'/%3E%3Ccircle cx='30' cy='30' r='3'/%3E%3Ccircle cx='15' cy='15' r='2'/%3E%3Ccircle cx='45' cy='45' r='2'/%3E%3C/g%3E%3C/svg%3E")`,
-                }}
-            />
+        <section className="relative py-24 lg:py-32 bg-coesa-navy overflow-hidden" id="contact">
+            {/* Background Accents */}
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-coesa-electric/5 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-coesa-sky/5 rounded-full blur-[120px] pointer-events-none" />
 
             <div className="max-w-container mx-auto px-6 relative z-10">
                 <div className="text-center mb-16">
                     <span className="inline-block font-mono text-sm text-coesa-electric uppercase tracking-[3px] mb-4">
                         Get In Touch
                     </span>
-                    <h2 className="font-display text-4xl md:text-5xl font-bold text-coesa-navy mb-4">
+                    <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-4">
                         Contact <span className="text-coesa-electric">Us</span>
                     </h2>
-                    <p className="font-body text-coesa-nav/70 max-w-2xl mx-auto text-lg">
+                    <p className="font-body text-coesa-muted max-w-2xl mx-auto text-lg">
                         Have questions or want to collaborate? We&apos;d love to hear from you. Drop us a message or visit our department.
                     </p>
                 </div>
@@ -49,50 +46,50 @@ export function ContactSection() {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
-                        className="bg-white rounded-3xl shadow-card border border-coesa-sky/10 p-8 md:p-10 flex flex-col justify-center h-full"
+                        className="bg-white/5 backdrop-blur-sm rounded-3xl shadow-card border border-white/10 p-8 md:p-10 flex flex-col justify-center h-full"
                     >
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="grid md:grid-cols-2 gap-6">
                                 <div className="space-y-2">
-                                    <label htmlFor="name" className="text-sm font-semibold text-coesa-navy">First Name</label>
+                                    <label htmlFor="name" className="text-sm font-semibold text-white/80">First Name</label>
                                     <input
                                         type="text"
                                         id="name"
                                         required
-                                        className="w-full px-4 py-3 rounded-xl border border-coesa-sky/20 bg-coesa-sky/5 focus:bg-white focus:border-coesa-electric focus:ring-2 focus:ring-coesa-electric/20 outline-none transition-all placeholder:text-coesa-nav/40"
+                                        className="w-full px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-white focus:bg-white/10 focus:border-coesa-electric focus:ring-2 focus:ring-coesa-electric/20 outline-none transition-all placeholder:text-white/30"
                                         placeholder="John"
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <label htmlFor="email" className="text-sm font-semibold text-coesa-navy">Email Address</label>
+                                    <label htmlFor="email" className="text-sm font-semibold text-white/80">Email Address</label>
                                     <input
                                         type="email"
                                         id="email"
                                         required
-                                        className="w-full px-4 py-3 rounded-xl border border-coesa-sky/20 bg-coesa-sky/5 focus:bg-white focus:border-coesa-electric focus:ring-2 focus:ring-coesa-electric/20 outline-none transition-all placeholder:text-coesa-nav/40"
+                                        className="w-full px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-white focus:bg-white/10 focus:border-coesa-electric focus:ring-2 focus:ring-coesa-electric/20 outline-none transition-all placeholder:text-white/30"
                                         placeholder="john@example.com"
                                     />
                                 </div>
                             </div>
 
                             <div className="space-y-2">
-                                <label htmlFor="subject" className="text-sm font-semibold text-coesa-navy">Subject</label>
+                                <label htmlFor="subject" className="text-sm font-semibold text-white/80">Subject</label>
                                 <input
                                     type="text"
                                     id="subject"
                                     required
-                                    className="w-full px-4 py-3 rounded-xl border border-coesa-sky/20 bg-coesa-sky/5 focus:bg-white focus:border-coesa-electric focus:ring-2 focus:ring-coesa-electric/20 outline-none transition-all placeholder:text-coesa-nav/40"
+                                    className="w-full px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-white focus:bg-white/10 focus:border-coesa-electric focus:ring-2 focus:ring-coesa-electric/20 outline-none transition-all placeholder:text-white/30"
                                     placeholder="How can we help?"
                                 />
                             </div>
 
                             <div className="space-y-2">
-                                <label htmlFor="message" className="text-sm font-semibold text-coesa-navy">Message</label>
+                                <label htmlFor="message" className="text-sm font-semibold text-white/80">Message</label>
                                 <textarea
                                     id="message"
                                     required
                                     rows={5}
-                                    className="w-full px-4 py-3 rounded-xl border border-coesa-sky/20 bg-coesa-sky/5 focus:bg-white focus:border-coesa-electric focus:ring-2 focus:ring-coesa-electric/20 outline-none transition-all placeholder:text-coesa-nav/40 resize-none"
+                                    className="w-full px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-white focus:bg-white/10 focus:border-coesa-electric focus:ring-2 focus:ring-coesa-electric/20 outline-none transition-all placeholder:text-white/30 resize-none"
                                     placeholder="Your message here..."
                                 />
                             </div>
@@ -127,7 +124,7 @@ export function ContactSection() {
                         transition={{ duration: 0.6 }}
                         className="h-full min-h-[400px] lg:min-h-0"
                     >
-                        <div className="w-full h-full rounded-3xl overflow-hidden shadow-card border border-coesa-sky/10 relative group bg-[#0f172a]">
+                        <div className="w-full h-full rounded-3xl overflow-hidden shadow-card border border-white/10 relative group bg-black">
                             <iframe
                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15664.218520891512!2d7.6393478954751305!3d11.14498522306353!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x11b2843b0f5de1a7%3A0x6bca06f6bdf1a0e7!2sAhmadu%20Bello%20University%20Zaria!5e0!3m2!1sen!2sng!4v1709664551234!5m2!1sen!2sng"
                                 width="100%"
@@ -136,7 +133,7 @@ export function ContactSection() {
                                 allowFullScreen
                                 loading="lazy"
                                 referrerPolicy="no-referrer-when-downgrade"
-                                className="group-hover:opacity-100 transition-all duration-500 absolute inset-0 z-0 object-cover"
+                                className="opacity-90 transition-all duration-500 absolute inset-0 z-0 object-cover"
                             ></iframe>
                         </div>
                     </motion.div>

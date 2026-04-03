@@ -35,13 +35,13 @@ export const metadata: Metadata = {
   description:
     "Official website of the Computer Engineering Student Association, Ahmadu Bello University, Zaria.",
   openGraph: {
-    images: ["/og-image.png"],
+    images: ["/images/logo/logo.jpeg"],
     type: "website",
     title: "COESA — ABU Zaria",
     description:
-      "Computer Engineering Student Association, ABU Zaria. Engineering the Future, One Line at a Time.",
+    "Computer Engineering Student Association, ABU Zaria. Engineering the Future, One Line at a Time.",
   },
-  icons: { icon: "/favicon.ico" },
+  icons: { icon: "/images/logo/logo.jpeg" },
 };
 
 export const viewport: Viewport = {

@@ -3,18 +3,51 @@
 import { useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { ChevronDown, ArrowRight } from "lucide-react";
+import { motion, useMotionValue, useSpring, useTransform, MotionValue } from "framer-motion";
+import { ChevronDown, ArrowRight, Globe, Code, Cpu, Bot } from "lucide-react";
 import { ParticleCanvas } from "@/components/features/ParticleCanvas";
 import { CountUp } from "@/components/features/CountUp";
 import { MOCK_STATS } from "@/lib/mock-data";
 
 const CAPABILITY_BADGES = [
-    { icon: "💻", label: "Software Engineering", x: "-10%", y: "12%", depth: 1.5 },
-    { icon: "🔧", label: "Hardware Design", x: "82%", y: "8%", depth: 2 },
-    { icon: "🌐", label: "Networking", x: "-6%", y: "74%", depth: 1.8 },
-    { icon: "🤖", label: "AI & Robotics", x: "78%", y: "78%", depth: 1.2 },
+    { label: "Software Engineering", icon: <Code className="w-3.5 h-3.5" />, x: "5%", y: "15%", index: 0 },
+    { label: "Networking", icon: <Globe className="w-3.5 h-3.5" />, x: "10%", y: "75%", index: 1 },
+    { label: "Hardware Design", icon: <Cpu className="w-3.5 h-3.5" />, x: "85%", y: "20%", index: 2 },
+    { label: "AI & Robotics", icon: <Bot className="w-3.5 h-3.5" />, x: "80%", y: "80%", index: 3 },
 ];
+
+function CapabilityBadge({ 
+    badge, 
+    smoothX, 
+    smoothY 
+}: { 
+    badge: typeof CAPABILITY_BADGES[0], 
+    smoothX: MotionValue<number>, 
+    smoothY: MotionValue<number> 
+}) {
+    const { index, label, icon, x, y } = badge;
+    
+    const badgeX = useTransform(smoothX, [0, 1], [10 * (index % 2 ? 1 : -1), -10 * (index % 2 ? 1 : -1)]);
+    const badgeY = useTransform(smoothY, [0, 1], [10 * (index < 2 ? 1 : -1), -10 * (index < 2 ? 1 : -1)]);
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.8 + index * 0.1, duration: 0.5 }}
+            className="absolute hidden lg:flex items-center gap-2.5 px-5 py-3 rounded-full glass-strong text-xs font-body font-bold text-white shadow-card z-30 border border-white/10 whitespace-nowrap"
+            style={{
+                left: x,
+                top: y,
+                x: badgeX,
+                y: badgeY,
+            }}
+        >
+            <span className="text-coesa-sky">{icon}</span>
+            {label}
+        </motion.div>
+    );
+}
 
 export function HeroSection() {
     const sectionRef = useRef<HTMLElement>(null);
@@ -24,34 +57,23 @@ export function HeroSection() {
     const mouseY = useMotionValue(0.5);
 
     // Smooth springs for fluid motion
-    const springConfig = { damping: 25, stiffness: 120, mass: 0.5 };
+    const springConfig = { damping: 30, stiffness: 100, mass: 0.5 };
     const smoothX = useSpring(mouseX, springConfig);
     const smoothY = useSpring(mouseY, springConfig);
 
-    // Transform ranges for different elements
-    const imageRotateY = useTransform(smoothX, [0, 1], [3, -3]);
-    const imageRotateX = useTransform(smoothY, [0, 1], [-3, 3]);
+    // Transform ranges for subtle depth effects
     const glowX = useTransform(smoothX, [0, 1], ["-20%", "20%"]);
     const glowY = useTransform(smoothY, [0, 1], ["-15%", "15%"]);
     const textX = useTransform(smoothX, [0, 1], [6, -6]);
     const textY = useTransform(smoothY, [0, 1], [4, -4]);
-    const shineX = useTransform(smoothX, [0, 1], [-100, 100]);
 
-    // Pre-compute badge parallax transforms (hooks must be at top level)
-    const badge0X = useTransform(smoothX, [0, 1], [8 * CAPABILITY_BADGES[0].depth, -8 * CAPABILITY_BADGES[0].depth]);
-    const badge0Y = useTransform(smoothY, [0, 1], [6 * CAPABILITY_BADGES[0].depth, -6 * CAPABILITY_BADGES[0].depth]);
-    const badge1X = useTransform(smoothX, [0, 1], [8 * CAPABILITY_BADGES[1].depth, -8 * CAPABILITY_BADGES[1].depth]);
-    const badge1Y = useTransform(smoothY, [0, 1], [6 * CAPABILITY_BADGES[1].depth, -6 * CAPABILITY_BADGES[1].depth]);
-    const badge2X = useTransform(smoothX, [0, 1], [8 * CAPABILITY_BADGES[2].depth, -8 * CAPABILITY_BADGES[2].depth]);
-    const badge2Y = useTransform(smoothY, [0, 1], [6 * CAPABILITY_BADGES[2].depth, -6 * CAPABILITY_BADGES[2].depth]);
-    const badge3X = useTransform(smoothX, [0, 1], [8 * CAPABILITY_BADGES[3].depth, -8 * CAPABILITY_BADGES[3].depth]);
-    const badge3Y = useTransform(smoothY, [0, 1], [6 * CAPABILITY_BADGES[3].depth, -6 * CAPABILITY_BADGES[3].depth]);
-    const badgeTransforms = [
-        { x: badge0X, y: badge0Y },
-        { x: badge1X, y: badge1Y },
-        { x: badge2X, y: badge2Y },
-        { x: badge3X, y: badge3Y },
-    ];
+    // Pre-compute image transforms for 3D parallax layers
+    const img1X = useTransform(smoothX, [0, 1], [15, -15]); // Back
+    const img1Y = useTransform(smoothY, [0, 1], [12, -12]);
+    const img2X = useTransform(smoothX, [0, 1], [-15, 15]); // Mid
+    const img2Y = useTransform(smoothY, [0, 1], [-12, 12]);
+    const img3X = useTransform(smoothX, [0, 1], [-20, 20]); // Front
+    const img3Y = useTransform(smoothY, [0, 1], [-18, 18]);
 
     // Mouse move handler
     const handleMouseMove = useCallback((e: MouseEvent) => {
@@ -63,7 +85,6 @@ export function HeroSection() {
         mouseY.set(y);
     }, [mouseX, mouseY]);
 
-    // Mouse leave — reset to center
     const handleMouseLeave = useCallback(() => {
         mouseX.set(0.5);
         mouseY.set(0.5);
@@ -83,9 +104,9 @@ export function HeroSection() {
     return (
         <section
             ref={sectionRef}
-            className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-[120px] pb-8 lg:pt-[140px]"
+            className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-[120px] pb-16 lg:pt-[100px]"
         >
-            {/* Background gradient */}
+            {/* ─── ORIGINAL DARK THEME BACKGROUND ─── */}
             <div className="absolute inset-0 bg-grad-hero" />
 
             {/* Circuit pattern overlay */}
@@ -106,7 +127,7 @@ export function HeroSection() {
                 className="absolute inset-0 pointer-events-none"
                 style={{
                     background: "radial-gradient(ellipse 600px 400px at var(--glow-x) var(--glow-y), rgba(0,180,255,0.12) 0%, transparent 70%)",
-                    // @ts-ignore
+                    // @ts-expect-error -- Custom CSS properties on motion.div
                     "--glow-x": glowX,
                     "--glow-y": glowY,
                 }}
@@ -115,201 +136,182 @@ export function HeroSection() {
             {/* Static fallback glow */}
             <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 60% 50% at 70% 40%, rgba(0,180,255,0.08) 0%, transparent 70%)" }} />
 
-            {/* ─── Main Content ─── */}
+            {/* ─── MAIN CONTENT ─── */}
             <div className="relative z-10 max-w-container mx-auto px-6 w-full flex-1 flex flex-col justify-center">
-                <div className="grid lg:grid-cols-[1fr_1.2fr] gap-10 lg:gap-12 items-center">
+                <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-16 items-center">
 
-                    {/* ─── LEFT COLUMN: Typography ─── */}
+                    {/* ─── LEFT COLUMN: Text ─── */}
                     <motion.div
                         initial={{ opacity: 0, x: -40 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.7, ease: "easeOut" }}
-                        className="order-2 lg:order-1"
+                        transition={{ duration: 0.8, ease: "easeOut" }}
                         style={{ x: textX, y: textY }}
                     >
-                        {/* Kicker pill */}
                         <motion.div
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2, duration: 0.5 }}
-                            className="mb-5"
+                            className="mb-8"
                         >
-                            <span className="inline-block py-1.5 px-4 rounded-full bg-coesa-electric/10 border border-coesa-electric/20 text-coesa-electric text-[11px] font-bold tracking-[0.25em] uppercase">
+                            <span className="inline-flex items-center gap-2 py-2 px-5 rounded-full bg-coesa-electric/10 border border-coesa-electric/20 text-coesa-electric text-[11px] font-bold tracking-[0.25em] uppercase">
+                                <span className="w-1.5 h-1.5 rounded-full bg-coesa-electric animate-pulse" />
                                 Welcome to COESA
                             </span>
                         </motion.div>
 
-                        {/* Sub-heading */}
-                        <motion.p
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.3, duration: 0.5 }}
-                            className="text-coesa-muted font-display font-semibold text-sm lg:text-base uppercase tracking-[0.15em] mb-4"
-                        >
-                            Computer Engineering Student Association
-                            <br />
-                            <span className="text-coesa-sky">Ahmadu Bello University Chapter</span>
-                        </motion.p>
-
-                        {/* Main headline */}
                         <motion.h1
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.4, duration: 0.6 }}
-                            className="font-display text-[clamp(2.5rem,7vw,5.5rem)] font-black text-white leading-[1.05] mb-6"
-                            style={{ textShadow: "0 4px 40px rgba(0,180,255,0.15)" }}
+                            transition={{ delay: 0.3, duration: 0.6 }}
+                            className="font-display text-[clamp(2.5rem,6vw,4.5rem)] font-black text-white leading-[1.05] mb-6 tracking-tight"
                         >
-                            Engineering
-                            <br />
-                            the Future,
-                            <br />
-                            <span className="text-gradient">One Line</span> at
-                            <br />
-                            a Time.
+                            Driving a <br />
+                            <span className="text-coesa-electric">Digital-First</span> <br />
+                            Future.
                         </motion.h1>
 
-                        {/* Description */}
                         <motion.p
-                            initial={{ opacity: 0, y: 10 }}
+                            initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.55, duration: 0.5 }}
-                            className="font-body text-lg text-coesa-muted font-light max-w-[480px] mb-8 leading-relaxed"
+                            transition={{ delay: 0.4, duration: 0.6 }}
+                            className="font-body text-lg lg:text-xl text-coesa-muted font-light max-w-[540px] mb-10 leading-relaxed"
                         >
-                            Empowering the next generation of computer engineers through innovation,
-                            collaboration, and high-performance technical excellence.
+                            Empowering the next generation of computer engineers through innovation, 
+                            collaboration, and high-performance technical excellence at Ahmadu Bello University.
                         </motion.p>
 
-                        {/* CTAs */}
                         <motion.div
-                            initial={{ opacity: 0, y: 10 }}
+                            initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.65, duration: 0.5 }}
-                            className="flex flex-wrap items-center gap-4"
+                            transition={{ delay: 0.5, duration: 0.6 }}
+                            className="flex flex-wrap items-center gap-5"
                         >
                             <Link
                                 href="/administration"
-                                className="group inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-coesa-sky to-coesa-electric text-white font-body font-bold text-sm shadow-btn hover:brightness-110 hover:scale-[1.03] active:scale-[0.97] transition-all duration-300"
+                                className="group inline-flex items-center gap-3 px-10 py-4 rounded-full bg-gradient-to-r from-coesa-sky to-coesa-electric text-white font-body font-bold text-sm shadow-btn hover:brightness-110 hover:scale-[1.03] active:scale-[0.97] transition-all duration-300"
                             >
                                 Explore COESA
                                 <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                             </Link>
                             <Link
                                 href="/administration"
-                                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full border border-white/20 text-white font-body font-bold text-sm hover:bg-white/5 hover:border-white/30 active:scale-[0.97] transition-all duration-300"
+                                className="inline-flex items-center gap-3 px-10 py-4 rounded-full border-2 border-white/20 text-white font-body font-bold text-sm hover:bg-white/5 hover:border-white/30 active:scale-[0.97] transition-all duration-300"
                             >
                                 View Manifest
                             </Link>
                         </motion.div>
                     </motion.div>
 
-                    {/* ─── RIGHT COLUMN: Image + Floating Badges ─── */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 40, scale: 0.95 }}
-                        animate={{ opacity: 1, x: 0, scale: 1 }}
-                        transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-                        className="order-1 lg:order-2 relative flex items-center justify-center"
-                        style={{
-                            rotateY: imageRotateY,
-                            rotateX: imageRotateX,
-                            transformPerspective: 1200,
-                        }}
-                    >
-                        {/* Image container — LARGER */}
-                        <div className="relative w-full max-w-[640px] aspect-[4/3] rounded-3xl overflow-hidden group">
-                            {/* Glow behind the image */}
-                            <div className="absolute -inset-2 rounded-3xl bg-gradient-to-br from-coesa-sky/25 via-coesa-electric/15 to-transparent blur-2xl opacity-60 group-hover:opacity-90 transition-opacity duration-700" />
+                    {/* ─── RIGHT COLUMN: NEW ARRANGEMENT WITH ORIGINAL CONTENT ─── */}
+                    <div className="order-1 lg:order-2 relative flex items-center justify-center min-h-[500px] lg:min-h-[600px]">
+                        <div className="relative w-full h-full max-w-[600px]">
+                            
+                            {/* Card 1: Networking (Back layer) */}
+                            <motion.div
+                                initial={{ opacity: 0, x: 60, scale: 0.9 }}
+                                animate={{ opacity: 1, x: 0, scale: 1 }}
+                                transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                                style={{ x: img1X, y: img1Y }}
+                                className="absolute right-[5%] top-[5%] w-[65%] aspect-[4/3] rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white/10 z-0"
+                            >
+                                <Image
+                                    src="/images/community/community4.jpg"
+                                    alt="Networking Lab"
+                                    fill
+                                    className="object-cover"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-tr from-coesa-navy/40 to-transparent pointer-events-none" />
+                            </motion.div>
 
-                            {/* Image frame */}
-                            <div className="relative w-full h-full rounded-3xl overflow-hidden border border-white/10 shadow-[0_24px_100px_rgba(0,0,0,0.6)]">
+                            {/* Card 2: Software Engineering (Middle layer) */}
+                            <motion.div
+                                initial={{ opacity: 0, x: 60, y: 60, scale: 0.9 }}
+                                animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+                                transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                                style={{ x: img2X, y: img2Y, rotate: 2 }}
+                                className="absolute bottom-[10%] -right-[5%] w-[70%] aspect-[4/3] rounded-[2.5rem] overflow-hidden shadow-[0_40px_80px_rgba(0,0,0,0.5)] border-4 border-white/10 z-10"
+                            >
+                                <Image
+                                    src="/images/community/community.jpg"
+                                    alt="Software Engineering Session"
+                                    fill
+                                    className="object-cover"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-bl from-coesa-navy/40 to-transparent pointer-events-none" />
+                            </motion.div>
+
+                            {/* Card 3: Department Main (Front layer) */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 40, scale: 0.9 }}
+                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                                style={{ x: img3X, y: img3Y }}
+                                className="relative w-full aspect-[4/3.5] rounded-[3rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.6)] border-4 border-white/20 z-20 group"
+                            >
                                 <Image
                                     src="/images/about/Computer 1.jpg"
                                     alt="Department of Computer Engineering, ABU Zaria"
                                     fill
-                                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                                    sizes="(max-width: 768px) 100vw, 640px"
+                                    className="object-cover transition-transform duration-700 group-hover:scale-110"
                                     priority
                                 />
-                                {/* Bottom gradient fade */}
-                                <div className="absolute inset-0 bg-gradient-to-t from-coesa-midnight/80 via-transparent to-transparent" />
-                                {/* Top-left subtle overlay */}
-                                <div className="absolute inset-0 bg-gradient-to-br from-coesa-navy/30 to-transparent" />
-
-                                {/* Inner shine line that follows mouse */}
-                                <motion.div
-                                    className="absolute inset-0 pointer-events-none"
-                                    style={{
-                                        background: `linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.03) 50%, transparent 60%)`,
-                                        x: shineX,
-                                    }}
-                                />
-                            </div>
-                        </div>
-
-                        {/* Floating capability badges — parallax on mouse */}
-                        {CAPABILITY_BADGES.map((badge, i) => (
-                            <motion.div
-                                key={badge.label}
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                animate={{
-                                    opacity: 1,
-                                    scale: 1,
-                                }}
-                                transition={{
-                                    opacity: { delay: 0.7 + i * 0.12, duration: 0.5 },
-                                    scale: { delay: 0.7 + i * 0.12, duration: 0.5 },
-                                }}
-                                className="absolute hidden lg:flex items-center gap-2 px-4 py-2.5 rounded-full glass-strong text-xs font-body font-bold text-white/90 shadow-card whitespace-nowrap z-20 border border-white/[0.06]"
-                                style={{
-                                    left: badge.x,
-                                    top: badge.y,
-                                    x: badgeTransforms[i].x,
-                                    y: badgeTransforms[i].y,
-                                }}
-                            >
-                                <span className="text-base">{badge.icon}</span>
-                                {badge.label}
+                                <div className="absolute inset-0 bg-gradient-to-t from-coesa-midnight/40 via-transparent to-transparent pointer-events-none" />
                             </motion.div>
-                        ))}
-                    </motion.div>
+
+                            {/* Capability Badges */}
+                            {CAPABILITY_BADGES.map((badge) => (
+                                <CapabilityBadge 
+                                    key={badge.label} 
+                                    badge={badge} 
+                                    smoothX={smoothX} 
+                                    smoothY={smoothY} 
+                                />
+                            ))}
+
+                            {/* Glow behind the collage */}
+                            <div className="absolute -inset-10 bg-coesa-electric/10 rounded-full blur-[100px] pointer-events-none -z-10" />
+                        </div>
+                    </div>
                 </div>
 
-                {/* ─── STATS STRIP ─── */}
+                {/* ─── STATS SECTION ─── */}
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.9, duration: 0.6, ease: "easeOut" }}
-                    className="mt-16 lg:mt-20"
+                    className="mt-16 lg:mt-24 border-t border-white/5 pt-12"
                 >
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
                         {MOCK_STATS.map((stat, index) => (
                             <motion.div
                                 key={stat.label}
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 1.0 + index * 0.1, duration: 0.4 }}
-                                className="relative rounded-2xl glass border border-white/[0.06] p-5 text-center group hover:border-coesa-electric/20 transition-colors duration-500"
+                                className="text-center md:text-left group"
                             >
-                                <div className="font-display text-4xl lg:text-5xl font-black text-gradient mb-1">
+                                <div className="font-display text-4xl lg:text-5xl font-black text-gradient mb-2">
                                     <CountUp end={stat.value} suffix={stat.suffix} />
                                 </div>
-                                <div className="font-body text-[11px] text-coesa-muted uppercase tracking-[0.2em] font-bold">
+                                <div className="font-body text-[10px] text-coesa-muted uppercase tracking-[0.25em] font-bold">
                                     {stat.label}
                                 </div>
-                                {/* Subtle glow on hover */}
-                                <div className="absolute inset-0 rounded-2xl bg-coesa-electric/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                             </motion.div>
                         ))}
                     </div>
                 </motion.div>
             </div>
 
-            {/* Scroll indicator */}
+            {/* Scroll Indicator */}
             <motion.div
-                className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10"
+                className="absolute bottom-8 left-1/2 -translate-x-1/2"
                 animate={{ y: [0, 8, 0] }}
                 transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
             >
-                <ChevronDown className="w-5 h-5 text-coesa-muted/40" />
+                <div className="flex flex-col items-center gap-2">
+                    <span className="text-[10px] font-bold text-coesa-muted/50 uppercase tracking-widest">Scroll</span>
+                    <ChevronDown className="w-5 h-5 text-coesa-muted/30" />
+                </div>
             </motion.div>
         </section>
     );
